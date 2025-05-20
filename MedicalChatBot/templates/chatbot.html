@@ -1,0 +1,57 @@
+{% extends 'app_base.html' %}
+
+{% block content %}
+<div class="chat-wrapper mt-4">
+    <h2 class="text-center">Talk to our Medical Assistant</h2>
+    <div id="chat-box" class="chat-box"></div>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="Ask a medical question..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // append message pour afficher la reponse dans l'interface 
+    function appendMessage(sender, text) {
+        const msg = document.createElement("div");
+        msg.className = `message ${sender}`;
+        msg.innerText = text;
+    
+        const chatBox = document.getElementById("chat-box");
+        chatBox.appendChild(msg);
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
+    function sendMessage() {
+        const input = document.getElementById("user-input");
+        const text = input.value.trim();
+    
+        if (text === "") return;
+    
+        appendMessage("user", text);
+        input.value = "";
+    
+        fetch("/chat", {
+            method: "POST",
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ message: text })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Server error");
+            }
+            return response.json();
+        })
+        .then(data => {
+            appendMessage("bot", data.response);
+        })
+        .catch(error => {
+            console.error("Chat error:", error);
+            appendMessage("bot", "Sorry, something went wrong.");
+        });
+    }
+</script>
+    
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'admin_base.html' %}
+
+{% block admin_content %}
+<!-- Main Content -->
+<div class="p-4 flex-grow-1" style="width: 100%;">
+    <h2 class="mb-4">Welcome, Admin 👋</h2>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Messages</h5>
+                    <p class="card-text">245</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Users Today</h5>
+                    <p class="card-text">34</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Avg. Response Time</h5>
+                    <p class="card-text">1.2s</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Placeholder -->
+    <div class="card">
+        <div class="card-header bg-light">
+            Recent User Messages
+        </div>
+        <div class="card-body p-0">
+            <table class="table mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">User</th>
+                        <th scope="col">Message</th>
+                        <th scope="col">Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>User A</td>
+                        <td>What are symptoms of flu?</td>
+                        <td>2025-04-30 10:15</td>
+                    </tr>
+                    <tr>
+                        <td>User B</td>
+                        <td>Can I take paracetamol while pregnant?</td>
+                        <td>2025-04-30 09:50</td>
+                    </tr>
+                    <tr>
+                        <td>User C</td>
+                        <td>How to reduce fever in children?</td>
+                        <td>2025-04-30 09:30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

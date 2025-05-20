@@ -1,0 +1,42 @@
+{% extends 'admin_base.html' %}
+
+{% block admin_content %}
+<!-- Main Content -->
+<div class="p-4 flex-grow-1" style="width: 100%;">
+    <h2 class="mb-4">Update Ur Knowledg Graph 🧠</h2>
+
+    <!-- Add Agent Form Card -->
+    <div class="card">
+        <div class="card-header bg-light">
+            Knowledg Graph Configuration
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('UploadKG.upload_kg') }}" enctype="multipart/form-data">
+                <label for="kg_description" class="form-label"><strong>Graph Description</strong></label>
+                <input type="text" class="form-control" id="kg_description" name="kg_description" placeholder="e.g. Knowledge Graph of rare diseases" required>
+
+
+                <label for="kg_file" class="form-label"><strong>Upload Knowledge Graph File</strong></label>
+                <input type="file" class="form-control" id="kg_file" name="kg_file" accept=".csv" required>
+
+                <label for="entity_types" class="form-label"><strong>Entity Types</strong></label>
+                <input type="text" class="form-control" id="entity_types" name="entity_types" placeholder="e.g. Symptom, Disease, Treatment" required>
+
+                <label for="relation_types" class="form-label"><strong>Relation Types</strong></label>
+                <input type="text" class="form-control" id="relation_types" name="relation_types" placeholder="e.g. causes, hasSymptom, treatedBy" required>
+
+
+                <div class="mb-3">
+                    <label for="status" class="form-label"><strong>Status</strong></label>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="active" selected>Active</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Agent</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

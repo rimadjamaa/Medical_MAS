@@ -1,0 +1,43 @@
+{% extends 'admin_base.html' %}
+
+{% block admin_content %}
+<!-- Main Content -->
+<div class="p-4 flex-grow-1" style="width: 100%;">
+    <h2 class="mb-4">Add New Agent 🧠</h2>
+
+    <!-- Add Agent Form Card -->
+    <div class="card">
+        <div class="card-header bg-light">
+            Agent Configuration
+        </div>
+        <div class="card-body">
+            <form method="POST" action="{{ url_for('AddAgent.add_agent') }}" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="agent_name" class="form-label"><strong>Agent Name</strong></label>
+                    <input type="text" class="form-control" id="agent_name" name="agent_name" placeholder="e.g. symptom_checker" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="agent_discribe" class="form-label"><strong>Agent Discription</strong></label>
+                    <input type="text" class="form-control" id="agent_discribe" name="agent_discribe" placeholder="e.g. symptom_checker" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="main_py" class="form-label"><strong>main.py Content</strong></label>
+                    <textarea class="form-control" id="main_py" name="main_py" rows="12" placeholder="Paste the agent's main.py code here..." required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="status" class="form-label"><strong>Status</strong></label>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="active" selected>Active</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit Agent</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
