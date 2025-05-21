@@ -1,4 +1,7 @@
 from agents import gpt
+# from src.models.pydantic_models import Answer
+# from src.tools import TOOLS
+#from src.tools.tools import query_aura # tu importe le tool taek
 from config.prompts import (
     AGENT_INSTRUCTION,
     DIALOGUE_AGENT_PROMPT,
@@ -16,11 +19,12 @@ class GeminiAgent:
         self.prompt = prompt
         self.model = gpt
 
-    def run(self, question):
-        # On combine le prompt et la question utilisateur
-        full_prompt = f"{self.prompt}\n\nQuestion: {question}"
-        response = self.model.generate_content(full_prompt)
-        return response.text
+def run(self, question):
+    # On combine le prompt et la question utilisateur
+    full_prompt = f"{self.prompt}\n\nQuestion: {question}"
+    response = self.model.generate_content(full_prompt)
+    # tools=[query_aura], # tu ajoutes le tool taek pour chaque agent qui l'utilise
+    return response.text
 
 # Définition de chaque agent avec son prompt spécifique
 agent = GeminiAgent(AGENT_INSTRUCTION)
