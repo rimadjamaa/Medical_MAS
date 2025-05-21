@@ -1,1 +1,18 @@
-pip install ctransformers
+# --- Web backend ---
+Flask
+Flask-Login
+Flask-Cors
+Flask-Bcrypt
+# --- Database management ---
+Flask-SQLAlchemy
+
+# --- Google Gemini AI SDK ---
+google-generativeai
+
+# --- For environment variables (optional, but recommended) ---
+python-dotenv
+
+
+requests
+
+mysql-connector-python

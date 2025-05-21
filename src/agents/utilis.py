@@ -1,5 +1,5 @@
 from agents import AGENT_RESPONSE_KEYS
-from agno.agent import Agent
+from agents.agent import agent
 
 
 def extract_response_from_agent(response, agent_name):
@@ -25,6 +25,9 @@ def extract_response_from_agent(response, agent_name):
 		answer = {key: answer.get(key) for key in expected_keys}
 		return answer
 	
-def getAgentAnswer(agent: Agent, query: str, structured_outputs: bool = True, stream: bool = False) -> str:
-    result = agent.run(query, structured_outputs=structured_outputs, stream=stream)
-    return result.text
+def getAgentAnswer(agent, query):
+    """
+    Envoie la question à l'agent et retourne la réponse textuelle.
+    """
+    result = agent.run(query)
+    return result  # Ici, result est déjà une string (response.text dans GeminiAgent)
