@@ -13,12 +13,14 @@ from src.config.prompts import (
 from src.agents import gpt
 # from src.models.pydantic_models import Answer
 # from src.tools import TOOLS
+from src.tools.tools import query_aura # tu importe le tool taek
 
 # ici je doit defini tt mes agents de mon medical MAS 
 agent = Agent(
 	name="agent",
 	model=gpt,
 	instructions=AGENT_INSTRUCTION,
+    # tools=[query_aura], # tu ajoutes le tool taek pour chaque agent qui l'utilise
 	# response_model=Answer, # optional for structured outputs or api response
     # tools=TOOLS['agent'],  # optional for agent tools
     structured_outputs=False,
