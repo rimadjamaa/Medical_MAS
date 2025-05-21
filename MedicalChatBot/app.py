@@ -1,5 +1,6 @@
 from flask import Flask, render_template, redirect, url_for ,request , jsonify
 from extentions import db
+from services.chat_service import get_chat_response
 from controlers.Registration import register
 from controlers.Add_Agent import AddAgent
 from controlers.Login import login_bp
@@ -7,6 +8,8 @@ from controlers.User_KG import UploadKG
 from flask_login import LoginManager, login_required, logout_user, current_user
 from models.UserModel import User 
 from flask_bcrypt import Bcrypt
+from flask_sqlalchemy import SQLAlchemy
+
 
 app = Flask(__name__)
 app.secret_key = "74938f8ec2054cd9e2b9df012af5455a"
@@ -17,6 +20,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
+
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login.login_rout'
@@ -24,7 +29,9 @@ bcrypt = Bcrypt()
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    with db.session() as session:
+        return session.get(User, int(user_id))
+    return db.session.get(User, int(user_id))
 
 @app.route('/')
 @login_required
@@ -42,7 +49,7 @@ def chat_api():
         print("User message:", user_message)
 
         # Just to test basic flow first:
-        response = f"You said: {user_message}"
+        response = get_chat_response(user_message)
 
         #use jsonify to convert data sended into vectors.. (which be accpeted by http)
         return jsonify({"response": response})
