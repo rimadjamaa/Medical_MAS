@@ -14,5 +14,5 @@ class User(db.Model,UserMixin):
         self.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def check_password(self, password):
-        from app import bcrypt
+        from MedicalChatBot.app import bcrypt
         return bcrypt.check_password_hash(self.password_hash, password)

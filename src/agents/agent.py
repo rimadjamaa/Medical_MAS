@@ -1,7 +1,8 @@
-from agents import gpt
+from agno.agent import Agent
+from agents import gemini_model
 # from src.models.pydantic_models import Answer
-# from src.tools import TOOLS
-#from src.tools.tools import query_aura # tu importe le tool taek
+from tools import search_symptoms
+from tools.tools import query_aura # tu importe le tool taek
 from config.prompts import (
     AGENT_INSTRUCTION,
     DIALOGUE_AGENT_PROMPT,
@@ -10,28 +11,67 @@ from config.prompts import (
     KG_QUERY_PROMPT,
     EDUCATION_AGENT_PROMPT,
     RECOMMENDATION_AGENT_PROMPT,
-    ORIENTATION_AGENT_PROMPT,
 )
 
-# Classe générique d'agent Gemini
-class GeminiAgent:
-    def __init__(self, prompt):
-        self.prompt = prompt
-        self.model = gpt
+# Définition de chaque agent avec son nom, modèle et prompt
+agent = Agent(
+    name="symptom_checker",
+    model=gemini_model,
+    instructions="You are a medical assistant who checks symptoms.",
+)
 
-def run(self, question):
-    # On combine le prompt et la question utilisateur
-    full_prompt = f"{self.prompt}\n\nQuestion: {question}"
-    response = self.model.generate_content(full_prompt)
-    # tools=[query_aura], # tu ajoutes le tool taek pour chaque agent qui l'utilise
-    return response.text
+agent_dialogue = Agent(
+    name="agent_dialogue",
+    model=gemini_model,
+    instructions=DIALOGUE_AGENT_PROMPT,
+    tools=[search_symptoms],
+)
 
-# Définition de chaque agent avec son prompt spécifique
-agent = GeminiAgent(AGENT_INSTRUCTION)
-agent_dialogue = GeminiAgent(DIALOGUE_AGENT_PROMPT)
-agent_coordination = GeminiAgent(COORDINATION_AGENT_PROMPT)
-agent_symptom_checker = GeminiAgent(SYMPTOM_CHECKER_PROMPT)
-agent_kg_query = GeminiAgent(KG_QUERY_PROMPT)
-agent_education = GeminiAgent(EDUCATION_AGENT_PROMPT)
-agent_recommendation = GeminiAgent(RECOMMENDATION_AGENT_PROMPT)
-agent_orientation = GeminiAgent(ORIENTATION_AGENT_PROMPT)
+agent_symptom_checker = Agent(
+    name="agent_symptom_checker",
+    model=gemini_model,
+    instructions=SYMPTOM_CHECKER_PROMPT
+)
+
+agent_coordination = Agent(
+    name="agent_coordination",
+    model=gemini_model,
+    instructions=COORDINATION_AGENT_PROMPT
+)
+
+agent_kg_query = Agent(
+    name="agent_kg_query",
+    model=gemini_model,
+    instructions="""
+        You are a knowledge graph query agent. 
+        Your task is to generate an appropriate Cypher query from the user question, 
+        and use the tool 'query_aura' to execute it.
+        Return only the relevant information from the result.
+        also i want to see your cypher query in the response 
+    """,
+    tools=[query_aura]
+)
+
+agent_education = Agent(
+    name="agent_education",
+    model=gemini_model,
+    instructions=EDUCATION_AGENT_PROMPT
+)
+
+agent_recommendation = Agent(
+    name="agent_recommendation",
+    model=gemini_model,
+    instructions=RECOMMENDATION_AGENT_PROMPT
+)
+
+
+
+
+agents_dic = {
+    "AgentDialogue": agent_dialogue,
+    "AgentCoordination": agent_coordination,
+    "AgentSymptomChecker": agent_symptom_checker,
+    "AgentKGQuery": agent_kg_query,
+    "AgentEducation": agent_education,
+    "AgentRecommendation": agent_recommendation,
+}

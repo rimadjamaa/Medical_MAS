@@ -1,14 +1,13 @@
 import google.generativeai as genai
+from agno.models.google import Gemini
 
 # Gemini API key
-genai.configure(api_key="AIzaSyBz4IlNNrcdn7yOiAc1LddtealEYsdfrRI")
+gemini_model = Gemini("gemini-1.5-flash", api_key="AIzaSyBz4IlNNrcdn7yOiAc1LddtealEYsdfrRI")
 
-# Gemini model instance 1.5
-gpt = genai.GenerativeModel("gemini-1.5-flash")
-gpt.id = "gemini-1.5-flash"
+
 
 AGENT_RESPONSE_KEYS = {
-    "agent": ["answer"],
-    "agent_dialogue": ["answer_user"],
+    "agent_dialogue": ["symptoms", "maladies", "uncertainties", "suggested_next_step"],
+    "agent_coordination": ["some_key1", "some_key2"],
 }
 
